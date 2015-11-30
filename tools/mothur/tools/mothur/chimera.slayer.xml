@@ -1,6 +1,6 @@
 <tool id="mothur_chimera_slayer" name="Chimera.slayer" version="1.23.0">
  <description>Find putative chimeras using slayer</description>
- <command interpreter="python">
+  <command interpreter="python">
   mothur_wrapper.py 
   --cmd='chimera.slayer'
   --result='^mothur.\S+\.logfile$:'$logfile,'^\S+\.slayer\.chimeras?$:'$out_file,'^\S+\.slayer\.accnos$:'$out_accnos
@@ -97,18 +97,26 @@
 
   <param name="dereplicate" type="boolean" falsevalue="" truevalue="--dereplicate=true" checked="false" label="dereplicate - remove chimeric sequences from all groups, default=f" help="If parameter is false, then if one group finds the seqeunce to be chimeric, then all groups find it to be chimeric"/>
 
-
  </inputs>
+ 
  <outputs>
   <data format="html" name="logfile" label="${tool.name} on ${on_string}: logfile" />
   <data format="txt" name="out_file" label="${tool.name} on ${on_string}: slayer.chimeras" />
   <data format="accnos" name="out_accnos" label="${tool.name} on ${on_string}: slayer.accnos" />
  </outputs>
+ 
+ <tests>
+    <test>
+      <param name="fasta" value="chimera_test_in.fasta"/>
+      <output name="out_file" file="chimera_test_out.slayer.chimeras"/>
+      <output name="out_accnos" file="chimera_test_out.slayer.accnos"/>
+    </test>
+ </tests>
+
  <requirements>
   <requirement type="package" version="1.33">mothur</requirement>
  </requirements>
- <tests>
- </tests>
+
  <help>
 **Mothur Overview**
 
