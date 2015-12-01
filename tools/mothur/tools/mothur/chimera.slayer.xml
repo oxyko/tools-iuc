@@ -1,6 +1,11 @@
 <tool id="mothur_chimera_slayer" name="Chimera.slayer" version="1.23.0">
  <description>Find putative chimeras using slayer</description>
-  <command interpreter="python">
+<macros>
+	<import>macros.xml</import>
+</macros>
+ <expand macro="requirements" />
+
+ <command interpreter="python">
   mothur_wrapper.py 
   --cmd='chimera.slayer'
   --result='^mothur.\S+\.logfile$:'$logfile,'^\S+\.slayer\.chimeras?$:'$out_file,'^\S+\.slayer\.accnos$:'$out_accnos
@@ -12,10 +17,10 @@
    #if $alignment.name.__str__ != "None" and len($alignment.name.__str__) > 0:
     --name=$alignment.name
    #end if
-   #if $alignment.group.__str__ != '':
+   #if $alignment.group.__str__ != "None" and len($alignment.group.__str__) > 0:
     --group=$alignment.group
 	 #end if
-	 #if $alignment.count.__str__ != '':
+	 #if $alignment.count.__str__ != "None" and len($alignment.count.__str__) > 0:
 	 	--count=$alignment.count	
 	 #end if
   #else:
@@ -108,23 +113,16 @@
  <tests>
     <test>
       <param name="fasta" value="chimera_test_in.fasta"/>
+      <param name="alignment.source" value="self"/>
       <output name="out_file" file="chimera_test_out.slayer.chimeras"/>
       <output name="out_accnos" file="chimera_test_out.slayer.accnos"/>
     </test>
  </tests>
 
- <requirements>
-  <requirement type="package" version="1.33">mothur</requirement>
- </requirements>
-
  <help>
-**Mothur Overview**
+<![CDATA[
 
-Mothur_, initiated by Dr. Patrick Schloss and his software development team
-in the Department of Microbiology and Immunology at The University of Michigan,
-provides bioinformatics for the microbial ecology community.
-
-.. _Mothur: http://www.mothur.org/wiki/Main_Page
+@MOTHUR_OVERVIEW@
 
 **Command Documenation**
 
@@ -146,6 +144,7 @@ It is not recommended to blindly discard all sequences flagged as chimeras. Some
 .. _ChimeraSlayer: http://microbiomeutil.sourceforge.net/
 .. _chimera.slayer: http://www.mothur.org/wiki/Chimera.slayer
 
-
+]]>
  </help>
+   <expand macro="citations" />
 </tool>
